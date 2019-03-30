@@ -7,29 +7,40 @@
                 <div class="card">
                     <div class="card-header">{{ __('Movies') }}</div>
 
+                    @if(session()->get('success'))
+                        <div class="alert alert-success">
+                            {{ session()->get('success') }}
+                        </div>
+                        <br />
+                    @endif
+
                     <div class="card-body">
                         <a class="btn btn-link" href="{{ route('movies.create') }}">{{ __('New movie') }}</a>
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th scope="col">{{ __('Name')  }}</th>
-                                <th scope="col">{{ __('Original name')  }}</th>
-                                <th scope="col">{{ __('Duration')  }}</th>
-                                <th scope="col" colspan="2">{{ __('Slug')  }}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($movies as $movie)
+                        @if(count($movies))
+                            <table class="table table-hover">
+                                <thead>
                                 <tr>
-                                    <td><a href="{{ route('movies.show', [$movie->slug]) }}">{{ $movie->name }}</a></td>
-                                    <td>{{ $movie->original_name }}</td>
-                                    <td>{{ $movie->duration_in_minutes . __(' minutes') }}</td>
-                                    <td>{{ $movie->slug }}</td>
-                                    <td><a href="{{ route('movies.edit', [$movie->slug]) }}">Edit</a></td>
+                                    <th scope="col">{{ __('Name')  }}</th>
+                                    <th scope="col">{{ __('Original name')  }}</th>
+                                    <th scope="col">{{ __('Duration')  }}</th>
+                                    <th scope="col" colspan="2">{{ __('Slug')  }}</th>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                @foreach($movies as $movie)
+                                    <tr>
+                                        <td><a href="{{ route('movies.show', [$movie->slug]) }}">{{ $movie->name }}</a></td>
+                                        <td>{{ $movie->original_name }}</td>
+                                        <td>{{ $movie->duration_in_minutes . __(' minutes') }}</td>
+                                        <td>{{ $movie->slug }}</td>
+                                        <td><a href="{{ route('movies.edit', [$movie->slug]) }}">Edit</a></td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            <p>{{ __('There is no movies on the database.') }}</p>
+                        @endif
                     </div>
                 </div>
             </div>
