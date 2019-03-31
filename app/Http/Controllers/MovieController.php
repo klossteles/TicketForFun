@@ -113,7 +113,7 @@ class MovieController extends Controller
         $movie->image_url = $request->get('image_url');
         $movie->save();
 
-        return redirect(route('movies.index'))->with('success', __('The movie ":movie_name" was saved successfully', [
+        return redirect(route('movies.index'))->with('success', __('The movie ":movie_name" was saved successfully.', [
             'movie_name' => $movie->name,
         ]));
     }
@@ -126,6 +126,10 @@ class MovieController extends Controller
      */
     public function destroy(Movie $movie)
     {
-        //
+        $movie->delete();
+
+        return redirect(route('movies.index'))->with('success', __('The movie ":movie_name" was deleted successfully.', [
+            'movie_name' => $movie->name,
+        ]));
     }
 }
