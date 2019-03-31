@@ -23,9 +23,11 @@ class MovieController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        return view('movies.create');
+        return view('movies.edit', [
+            'action_route' => route('movies.store'),
+        ]);
     }
 
     /**
@@ -45,17 +47,18 @@ class MovieController extends Controller
             'image_url' => 'required',
         ]);
 
-        $movie = new Movie([
-            'slug' => $request->get('slug'),
-            'name' => $request->get('name'),
-            'original_name' => $request->get('original_name'),
-            'duration_in_minutes' => $request->get('duration_in_minutes'),
-            'plot_summary' => $request->get('plot_summary'),
-            'image_url' => $request->get('image_url'),
-        ]);
+        $movie = new Movie();
+        $movie->slug = $request->get('slug');
+        $movie->name = $request->get('name');
+        $movie->original_name = $request->get('original_name');
+        $movie->duration_in_minutes = $request->get('duration_in_minutes');
+        $movie->plot_summary = $request->get('plot_summary');
+        $movie->image_url = $request->get('image_url');
         $movie->save();
 
-        return redirect(route('movies.index'))->with('success', "The movie {$movie->name} has been created.");
+        return redirect(route('movies.index'))->with('success', __('The movie ":movie_name" has been created.', [
+            'movie_name' => $movie->name,
+        ]));
     }
 
     /**
@@ -77,7 +80,11 @@ class MovieController extends Controller
      */
     public function edit(Movie $movie)
     {
-        //
+        return view('movies.edit', [
+            'action_route' => route('movies.update', $movie->slug),
+            'action_method' => 'PATCH',
+            'movie' => $movie,
+        ]);
     }
 
     /**
@@ -89,7 +96,26 @@ class MovieController extends Controller
      */
     public function update(Request $request, Movie $movie)
     {
-        //
+        $request->validate([
+            'slug' => 'required',
+            'name' => 'required',
+            'original_name' => 'required',
+            'duration_in_minutes' => 'required',
+            'plot_summary' => 'required',
+            'image_url' => 'required',
+        ]);
+
+        $movie->slug = $request->get('slug');
+        $movie->name = $request->get('name');
+        $movie->original_name = $request->get('original_name');
+        $movie->duration_in_minutes = $request->get('duration_in_minutes');
+        $movie->plot_summary = $request->get('plot_summary');
+        $movie->image_url = $request->get('image_url');
+        $movie->save();
+
+        return redirect(route('movies.index'))->with('success', __('The movie ":movie_name" was saved successfully', [
+            'movie_name' => $movie->name,
+        ]));
     }
 
     /**
