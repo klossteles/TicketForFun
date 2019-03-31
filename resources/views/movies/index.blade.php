@@ -23,7 +23,7 @@
                                     <th scope="col">{{ __('Name')  }}</th>
                                     <th scope="col">{{ __('Original name')  }}</th>
                                     <th scope="col">{{ __('Duration')  }}</th>
-                                    <th scope="col" colspan="3">{{ __('Slug')  }}</th>
+                                    <th scope="col">{{ __('Slug')  }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -33,14 +33,6 @@
                                         <td>{{ $movie->original_name }}</td>
                                         <td>{{ $movie->duration_in_minutes . __(' minutes') }}</td>
                                         <td>{{ $movie->slug }}</td>
-                                        <td><a class="btn btn-link" href="{{ route('movies.edit', $movie->slug) }}">Edit</a></td>
-                                        <td>
-                                            <form action="{{ route('movies.destroy', $movie->slug) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-link" type="submit">Delete</button>
-                                            </form>
-                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
