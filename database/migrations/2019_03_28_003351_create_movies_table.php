@@ -32,7 +32,7 @@ class CreateMoviesTable extends Migration
                 ->nullable(false);
 
             $table->longText('image_url')
-                ->nullable(false);
+                ->nullable(true);
 
             $table->timestamps();
         });
