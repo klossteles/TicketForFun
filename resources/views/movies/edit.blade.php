@@ -42,7 +42,7 @@
                                 <label for="plot_summary">Plot summary:</label>
                                 <textarea class="form-control" name="plot_summary">{{ old('plot_summary') ?? $movie->plot_summary }}</textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">Add</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                     </div>
                 </div>
